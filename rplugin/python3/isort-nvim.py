@@ -16,7 +16,7 @@ class IsortNvim:
         complete='customlist,IsortCompletions')
     def isort_command(self, args, range):
         text = self._get_lines(range)
-        output = self._isort(text)
+        output = self._isort(text, *args)
         lines = output.split('\n')[:-1]
         self.nvim.current.buffer[range[0] - 1:range[1]] = lines
 
