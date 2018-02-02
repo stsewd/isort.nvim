@@ -1,6 +1,6 @@
-import neovim
-from subprocess import Popen, PIPE
+from subprocess import PIPE, Popen
 
+import neovim
 
 ISORT_COMMAND = 'isort'
 
