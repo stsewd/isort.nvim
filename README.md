@@ -14,8 +14,8 @@ Inspired by [vim-isort](https://github.com/fisadev/vim-isort).
 Install using [vim-plug](https://github.com/junegunn/vim-plug).
 Put this on your `init.vim`.
 
-```
-Plug 'stsewd/isort.nvim'
+```vim
+Plug 'stsewd/isort.nvim', { 'for': 'python' }
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ Plug 'stsewd/isort.nvim'
 Call `:Isort` and it will sort the imports of the current buffer.
 You can also pass a range via the visual mode.
 
-All arguments of the command will be passed to isort.
+_All arguments of the command will be passed to isort_.
 
 ## Configuration
 
