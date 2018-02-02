@@ -13,14 +13,17 @@ class IsortNvim:
 
     @neovim.command('Isort', nargs='*', range='%', complete='file')
     def isort_command(self, args, range):
-        current_buffer = self.nvim.current.buffer[range[0] - 1:range[1]]
-        text = '\n'.join(current_buffer)
+        text = self._get_lines(range)
         output = self._isort(text)
         lines = output.split('\n')[:-1]
         self.nvim.current.buffer[range[0] - 1:range[1]] = lines
 
     def error(self, msg):
         self.nvim.err_write('[isort] {}\n'.format(msg))
+
+    def _get_lines(self, range):
+        lines = self.nvim.current.buffer[range[0] - 1:range[1]]
+        return '\n'.join(lines)
 
     def _isort(self, text, *args):
         isort_command = self.nvim.vars.get('isort_command', ISORT_COMMAND)
