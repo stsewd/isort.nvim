@@ -37,3 +37,4 @@ g:isort_command = 'isort'
 
 - No need to install isort on the same python environment.
 - Pure python implementation.
+- Neovim only.
