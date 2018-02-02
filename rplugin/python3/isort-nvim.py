@@ -13,19 +13,18 @@ class IsortNvim:
 
     @neovim.command('Isort', nargs='*', range='%', complete='file')
     def isort_command(self, args, range):
-        current_file = self.nvim.call('expand', '%')
-        if not current_file:
-            self.error('The current buffer is not saved')
-            return
-        output = self._isort(current_file)
+        current_buffer = self.nvim.current.buffer[range[0] - 1:range[1]]
+        text = '\n'.join(current_buffer)
+        output = self._isort(text)
         lines = output.split('\n')[:-1]
         self.nvim.current.buffer[:] = lines
 
     def error(self, msg):
         self.nvim.err_write('[isort] {}\n'.format(msg))
 
-    def _isort(self, file):
+    def _isort(self, text, *args):
         isort_command = self.nvim.vars.get('isort_command', ISORT_COMMAND)
-        args = [isort_command, '--stdout', file]
-        with Popen(args, stdout=PIPE) as proc:
-            return proc.stdout.read().decode()
+        isort_args = [isort_command] + list(args) + ['-']
+        with Popen(isort_args, stdin=PIPE, stdout=PIPE, stderr=PIPE) as proc:
+            output, error = proc.communicate(input=text.encode())
+            return output.decode()
