@@ -11,7 +11,9 @@ class IsortNvim:
     def __init__(self, nvim):
         self.nvim = nvim
 
-    @neovim.command('Isort', nargs='*', range='%', complete='file')
+    @neovim.command(
+        'Isort', nargs='*', range='%',
+        complete='customlist,IsortCompletions')
     def isort_command(self, args, range):
         text = self._get_lines(range)
         output = self._isort(text)
@@ -31,3 +33,21 @@ class IsortNvim:
         with Popen(isort_args, stdin=PIPE, stdout=PIPE, stderr=PIPE) as proc:
             output, error = proc.communicate(input=text.encode())
             return output.decode()
+
+    @neovim.function('IsortCompletions', sync=True)
+    def isort_completions(self, args):
+        arglead, cmdline, cursorpos, *_ = args
+        return [
+            '--line-width',
+            '--top',
+            '--future',
+            '--builtin',
+            '--thirdpaty',
+            '--project',
+            '--virtual-env',
+            '--multi-line',
+            '--indent',
+            '--add-import',
+            '--force-adds',
+            '--remove-import',
+        ]
