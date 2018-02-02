@@ -17,7 +17,7 @@ class IsortNvim:
         text = '\n'.join(current_buffer)
         output = self._isort(text)
         lines = output.split('\n')[:-1]
-        self.nvim.current.buffer[:] = lines
+        self.nvim.current.buffer[range[0] - 1:range[1]] = lines
 
     def error(self, msg):
         self.nvim.err_write('[isort] {}\n'.format(msg))
