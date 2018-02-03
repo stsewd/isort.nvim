@@ -32,3 +32,9 @@ Isort command.
 ```vim
 g:isort_command = 'isort'
 ```
+
+## Differences with vim-isort
+
+- No need to install isort on the same python environment.
+- Pure python implementation.
+- Neovim only.
