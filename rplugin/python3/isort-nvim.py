@@ -3,6 +3,20 @@ from subprocess import PIPE, Popen
 import neovim
 
 ISORT_COMMAND = 'isort'
+ISORT_OPTIONS = [
+    '--line-width',
+    '--top',
+    '--future',
+    '--builtin',
+    '--thirdpaty',
+    '--project',
+    '--virtual-env',
+    '--multi-line',
+    '--indent',
+    '--add-import',
+    '--force-adds',
+    '--remove-import',
+]
 
 
 @neovim.plugin
@@ -38,16 +52,7 @@ class IsortNvim:
     def isort_completions(self, args):
         arglead, cmdline, cursorpos, *_ = args
         return [
-            '--line-width',
-            '--top',
-            '--future',
-            '--builtin',
-            '--thirdpaty',
-            '--project',
-            '--virtual-env',
-            '--multi-line',
-            '--indent',
-            '--add-import',
-            '--force-adds',
-            '--remove-import',
+            option
+            for option in ISORT_OPTIONS
+            if option.startswith(arglead)
         ]
