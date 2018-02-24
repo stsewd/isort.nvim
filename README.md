@@ -15,7 +15,7 @@ Install using [vim-plug](https://github.com/junegunn/vim-plug).
 Put this on your `init.vim`.
 
 ```vim
-Plug 'stsewd/isort.nvim', { 'for': 'python', 'do': ':UpdateRemotePlugins' }
+Plug 'stsewd/isort.nvim', { 'do': ':UpdateRemotePlugins' }
 ```
 
 ## Usage
