@@ -29,16 +29,17 @@ class IsortNvim:
         'Isort', nargs='*', range='%',
         complete='customlist,IsortCompletions')
     def isort_command(self, args, range):
-        text = self._get_lines(range)
+        buffer = self.nvim.current.buffer
+        text = self._get_lines(buffer, range)
         output = self._isort(text, *args)
         lines = output.split('\n')[:-1]
-        self.nvim.current.buffer[range[0] - 1:range[1]] = lines
+        buffer[range[0] - 1:range[1]] = lines
 
     def error(self, msg):
         self.nvim.err_write('[isort] {}\n'.format(msg))
 
-    def _get_lines(self, range):
-        lines = self.nvim.current.buffer[range[0] - 1:range[1]]
+    def _get_lines(self, buffer, range):
+        lines = buffer[range[0] - 1:range[1]]
         return '\n'.join(lines)
 
     def _isort(self, text, *args):
