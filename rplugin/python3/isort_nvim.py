@@ -2,6 +2,11 @@ from subprocess import PIPE, Popen
 
 import neovim
 
+try:
+    import isort
+except ImportError:
+    print("\nisort is not installed, Please install to work.\n")    
+
 ISORT_COMMAND = 'isort'
 ISORT_OPTIONS = [
     '--line-width',
