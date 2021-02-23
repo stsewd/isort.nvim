@@ -8,6 +8,7 @@ Inspired by [vim-isort](https://github.com/fisadev/vim-isort).
 
 - [Isort](https://github.com/timothycrosley/isort) (`pip install isort`).
 - The `isort` command must be on your `PATH`.
+- Make sure that you install the latest version of isort (or at least >=5.7.0)
 
 ## Install
 
