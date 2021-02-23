@@ -31,8 +31,9 @@ class IsortNvim:
         buffer = self.nvim.current.buffer
         text = self._get_lines(buffer, range)
         output = self._isort(text, *args)
-        lines = output.split("\n")
-        buffer[range[0] - 1 : range[1]] = lines
+        if text != output:
+            lines = output.split("\n")
+            buffer[range[0] - 1 : range[1]] = lines
 
     def error(self, msg):
         self.nvim.err_write("[isort] {}\n".format(msg))
