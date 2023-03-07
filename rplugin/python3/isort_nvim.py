@@ -1,3 +1,4 @@
+import re
 from subprocess import PIPE, Popen
 
 import neovim
@@ -32,7 +33,7 @@ class IsortNvim:
         text = self._get_lines(buffer, range)
         output = self._isort(text, *args)
         if text != output:
-            lines = output.split("\n")
+            lines = re.split(r"\r\n?|\n", output)
             buffer[range[0] - 1 : range[1]] = lines
 
     def error(self, msg):
