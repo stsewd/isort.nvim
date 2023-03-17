@@ -25,7 +25,7 @@ class IsortNvim:
         self.nvim = nvim
 
     @neovim.command(
-        "Isort", nargs="*", range="%", complete="customlist,IsortCompletions"
+        "Isort", nargs="*", range="%", complete="customlist,IsortCompletions", sync=True
     )
     def isort_command(self, args, range):
         buffer = self.nvim.current.buffer
