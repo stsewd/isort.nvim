@@ -36,6 +36,12 @@ class IsortNvim:
             lines = re.split(r"\r\n?|\n", output)
             buffer[range[0] - 1 : range[1]] = lines
 
+    @neovim.command(
+        "IsortSync", nargs="*", range="%", complete="customlist,IsortCompletions", sync=True
+    )
+    def isort_sync_command(self, args, range):
+        self.isort_command(args, range)
+
     def error(self, msg):
         self.nvim.err_write("[isort] {}\n".format(msg))
 

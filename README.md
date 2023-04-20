@@ -26,6 +26,9 @@ You can also pass a range via the visual mode.
 
 _All arguments of the command will be passed to isort_.
 
+Alternatively, use `:IsortSync` if you need the operation to complete
+synchronously (e.g. in a BufWritePre autocmd).
+
 ## Configuration
 
 Isort command.
