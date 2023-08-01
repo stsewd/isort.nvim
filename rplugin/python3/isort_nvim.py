@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 from subprocess import PIPE, Popen
 
 import neovim
@@ -31,7 +32,7 @@ class IsortNvim:
     def isort_command(self, args, range):
         buffer = self.nvim.current.buffer
         text = self._get_lines(buffer, range)
-        output = self._isort(text, *args)
+        output = self._isort(text, *args, cwd=Path(buffer.name).parent)
         if text != output:
             lines = re.split(r"\r\n?|\n", output)
             buffer[range[0] - 1 : range[1]] = lines
@@ -49,10 +50,10 @@ class IsortNvim:
         lines = buffer[range[0] - 1 : range[1]]
         return "\n".join(lines)
 
-    def _isort(self, text, *args):
+    def _isort(self, text, *args, cwd=None):
         isort_command = self.nvim.vars.get("isort_command", ISORT_COMMAND)
         isort_args = [isort_command] + list(args) + ["-"]
-        with Popen(isort_args, stdin=PIPE, stdout=PIPE, stderr=PIPE) as proc:
+        with Popen(isort_args, stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=cwd) as proc:
             output, error = proc.communicate(input=text.encode())
             return output.decode()
 
